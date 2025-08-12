@@ -1,0 +1,24 @@
+<!-- app/views/years/index.html.erb -->
+<h1>Years</h1>
+
+<p><%= link_to "New Year", new_year_path, class: "btn btn-primary" %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Year</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @years.each do |y| %>
+      <tr>
+        <td><%= y.make.name %></td>
+        <td><%= y.car_model.name %></td>
+        <td><%= y.year %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

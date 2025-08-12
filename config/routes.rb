@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "years/index"
+  get "years/show"
+  get "years/new"
+  get "years/edit"
   get "car_models/index"
   get "car_models/show"
   get "car_models/new"
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :makes
+  resources :years
   resources :car_models do
     collection do
       get 'for_make/:make_id', action: :for_make, as: :for_make
