@@ -8,3 +8,14 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+.navbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px; background:#111; color:#fff; position:sticky; top:0;
+}
+.navbar__brand a { color:#fff; text-decoration:none; font-weight:600; }
+.navbar__links { list-style:none; display:flex; gap:16px; margin:0; padding:0; }
+.navbar__links a { color:#ddd; text-decoration:none; padding:6px 10px; border-radius:6px; }
+.navbar__links li.active a, .navbar__links a:hover { background:#2a2a2a; color:#fff; }
+.flash { margin:12px 16px; padding:8px 12px; border-radius:6px; }
+.flash--notice { background:#e6f4ea; color:#1f6f3d; }
+.flash--alert  { background:#fde8e8; color:#8b1c1c; }

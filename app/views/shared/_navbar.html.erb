@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar__brand">
+    <%= link_to "Dealership Inventory", root_path rescue link_to("Dealership Inventory", makes_path) %>
+  </div>
+
+  <ul class="navbar__links">
+    <li class="<%= 'active' if controller_name == 'makes' %>">
+      <%= link_to 'Make', makes_path %>
+    </li>
+    <li class="<%= 'active' if controller_name == 'car_models' %>">
+      <%= link_to 'Model', car_models_path %>
+    </li>
+    <li class="<%= 'active' if controller_name == 'years' %>">
+      <%= link_to 'Year', years_path %>
+    </li>
+    <li class="<%= 'active' if controller_name == 'cars' %>">
+      <%= link_to 'Car', cars_path %>
+    </li>
+  </ul>
+</nav>
