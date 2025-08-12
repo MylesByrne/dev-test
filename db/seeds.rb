@@ -7,10 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Seed 2 dealerships with 5 cars each
-dealerships = Dealership.create!([
-  { name: "Downtown Motors", oem: "Toyota" },
-  { name: "Uptown Autos", oem: "Honda" },
-])
+
+Car.destroy_all
+Year.destroy_all
+CarModel.destroy_all
+Make.destroy_all
 
 cars_data = [
   { year: 2022, make: "Toyota", model: "Camry", trim: "SE", count: 3 },
@@ -28,5 +29,31 @@ cars_data2 = [
   { year: 2020, make: "Honda", model: "Fit", trim: "LX", count: 2 },
 ]
 
-dealerships[0].cars.create!(cars_data)
-dealerships[1].cars.create!(cars_data2)
+all_cars_data = cars_data + cars_data2
+
+all_cars_data.each do |car_info|
+  
+  make = Make.find_or_create_by!(name: car_info[:make])
+
+  
+  car_model = CarModel.find_or_create_by!(name: car_info[:model], make: make)
+
+  
+  year_record = Year.find_or_create_by!(
+    year: car_info[:year],
+    make: make,
+    car_model: car_model
+  )
+
+  
+  Car.create!(
+    make: make,
+    car_model: car_model,
+    year: year_record,
+    trim: car_info[:trim],
+    count: car_info[:count]
+  )
+end
+
+puts "Seeded #{Make.count} makes, #{CarModel.count} models, #{Year.count} years, #{Car.count} cars."
+
