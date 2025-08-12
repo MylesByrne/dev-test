@@ -9,30 +9,47 @@ function initYearForm() {
   const modelSelect = document.getElementById('year_model_select');
   if (!makeSelect || !modelSelect) return;
 
-  makeSelect.addEventListener('change', function() {
-    const makeId = this.value;
+  if (makeSelect.dataset.bound === 'true') return;
+  makeSelect.dataset.bound = 'true';
+
+  function populateModels(makeId) {
+    modelSelect.innerHTML = '<option value="">Loading...</option>';
+    modelSelect.disabled = true;
+
     if (!makeId) {
       modelSelect.innerHTML = '<option value="">Select Model</option>';
+      modelSelect.disabled = false;
       return;
     }
-    modelSelect.innerHTML = '<option value="">Loading...</option>';
 
     fetch('/car_models/for_make/' + makeId, { headers: { 'Accept': 'application/json' } })
       .then(res => res.json())
       .then(models => {
         modelSelect.innerHTML = '<option value="">Select Model</option>';
-        models.forEach(function(m) {
+        models.forEach(m => {
           const opt = document.createElement('option');
-          opt.value = m.id;
-          opt.text  = m.name;
+          opt.value = m.id; opt.text = m.name;
           modelSelect.appendChild(opt);
         });
+        modelSelect.disabled = false;
+      })
+      .catch(() => {
+        modelSelect.innerHTML = '<option value="">Select Model</option>';
+        modelSelect.disabled = false;
       });
-  });
+  }
+
+  makeSelect.onchange = function () {
+    populateModels(this.value);
+  };
+
+  if (makeSelect.value && modelSelect.dataset.populated !== 'true') {
+    populateModels(makeSelect.value);
+    modelSelect.dataset.populated = 'true';
+  }
 }
 
 document.addEventListener('turbo:load', initYearForm);
-document.addEventListener('turbo:render', initYearForm);
 document.addEventListener('DOMContentLoaded', initYearForm);
 </script>
 
