@@ -2,8 +2,9 @@
 <h1>New Year</h1>
 
 <%= render "form", year: @year, makes: @makes, models: @models %>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function initYearForm() {
   const makeSelect  = document.getElementById('year_make_select');
   const modelSelect = document.getElementById('year_model_select');
   if (!makeSelect || !modelSelect) return;
@@ -28,7 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
   });
-});
+}
+
+document.addEventListener('turbo:load', initYearForm);
+document.addEventListener('turbo:render', initYearForm);
+document.addEventListener('DOMContentLoaded', initYearForm);
 </script>
 
 <p><%= link_to "Back", years_path %></p>
