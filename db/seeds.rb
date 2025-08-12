@@ -6,7 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Seed 2 dealerships with 5 cars each
 
 Car.destroy_all
 Year.destroy_all
