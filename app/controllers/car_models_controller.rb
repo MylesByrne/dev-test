@@ -38,6 +38,10 @@ class CarModelsController < ApplicationController
     redirect_to car_models_path, notice: 'Model was successfully deleted.'
   end
 
+  def for_make
+  render json: CarModel.where(make_id: params[:make_id]).select(:id, :name).order(:name)
+  end
+
   private
 
   def set_car_model

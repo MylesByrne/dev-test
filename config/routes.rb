@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :makes
-  resources :car_models
+  resources :car_models do
+    collection do
+      get 'for_make/:make_id', action: :for_make, as: :for_make
+    end
+  end
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
