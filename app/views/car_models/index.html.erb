@@ -1,0 +1,22 @@
+<!-- app/views/car_models/index.html.erb -->
+<h1>Models</h1>
+
+<p><%= link_to 'New Model', new_car_model_path, class: 'btn btn-primary' %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Make</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @car_models.each do |model| %>
+      <tr>
+        <td><%= model.make.name %></td>
+        <td><%= model.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

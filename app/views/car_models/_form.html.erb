@@ -1,0 +1,27 @@
+<!-- app/views/car_models/_form.html.erb -->
+<%= form_with(model: car_model, local: true) do |form| %>
+  <% if car_model.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(car_model.errors.count, "error") %> prohibited this model from being saved:</h2>
+      <ul>
+        <% car_model.errors.full_messages.each do |message| %>
+          <li><%= message %></li> <!-- e.g., "Name can't be blank" -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :make_id, "Make" %>
+    <%= form.collection_select :make_id, Make.order(:name), :id, :name, prompt: "Select Make" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name, "Name" %>
+    <%= form.text_field :name, placeholder: "e.g., 3 Series" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
