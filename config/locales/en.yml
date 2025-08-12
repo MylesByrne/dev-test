@@ -27,5 +27,13 @@
 #       "yes": yup
 #       enabled: "ON"
 
+# config/locales/en.yml
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      year:
+        car_model: "Model"
+      car:
+        car_model: "Model"
+        year: "Year"
+
