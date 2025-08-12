@@ -1,0 +1,19 @@
+<h1>Makes</h1>
+
+<%= link_to 'New Make', new_make_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @makes.each do |make| %>
+      <tr>
+        <td><%= make.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
