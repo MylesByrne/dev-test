@@ -3,6 +3,8 @@ require "selenium/webdriver"
 
 Capybara.server = :puma, { Silent: true }
 
+Capybara.default_max_wait_time = 10
+
 RSpec.configure do |config|
   config.before(:each, type: :system, js: false) do
     driven_by :rack_test
