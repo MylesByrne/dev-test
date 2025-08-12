@@ -10,28 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_02_120100) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_12_152400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "car_models", force: :cascade do |t|
+    t.string "name"
+    t.bigint "make_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["make_id"], name: "index_car_models_on_make_id"
+  end
+
   create_table "cars", force: :cascade do |t|
-    t.integer "year"
-    t.string "make"
-    t.string "model"
+    t.bigint "make_id", null: false
+    t.bigint "car_model_id", null: false
+    t.bigint "year_id", null: false
     t.string "trim"
     t.integer "count"
-    t.bigint "dealership_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["dealership_id"], name: "index_cars_on_dealership_id"
+    t.index ["car_model_id"], name: "index_cars_on_car_model_id"
+    t.index ["make_id"], name: "index_cars_on_make_id"
+    t.index ["year_id"], name: "index_cars_on_year_id"
   end
 
-  create_table "dealerships", force: :cascade do |t|
+  create_table "makes", force: :cascade do |t|
     t.string "name"
-    t.string "oem"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_makes_on_name", unique: true
   end
 
-  add_foreign_key "cars", "dealerships"
+  create_table "years", force: :cascade do |t|
+    t.integer "year"
+    t.bigint "make_id", null: false
+    t.bigint "car_model_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_model_id"], name: "index_years_on_car_model_id"
+    t.index ["make_id"], name: "index_years_on_make_id"
+  end
+
+  add_foreign_key "car_models", "makes"
+  add_foreign_key "cars", "car_models"
+  add_foreign_key "cars", "makes"
+  add_foreign_key "cars", "years"
+  add_foreign_key "years", "car_models"
+  add_foreign_key "years", "makes"
 end
