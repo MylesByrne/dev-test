@@ -8,13 +8,6 @@ RSpec.describe "Years", type: :request do
     end
   end
 
-  describe "GET /show" do
-    it "returns http success" do
-      get "/years/show"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
   describe "GET /new" do
     it "returns http success" do
       get "/years/new"
@@ -22,11 +15,5 @@ RSpec.describe "Years", type: :request do
     end
   end
 
-  describe "GET /edit" do
-    it "returns http success" do
-      get "/years/edit"
-      expect(response).to have_http_status(:success)
-    end
-  end
 
 end

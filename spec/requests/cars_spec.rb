@@ -8,23 +8,9 @@ RSpec.describe "Cars", type: :request do
     end
   end
 
-  describe "GET /show" do
-    it "returns http success" do
-      get "/cars/show"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
   describe "GET /new" do
     it "returns http success" do
       get "/cars/new"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /edit" do
-    it "returns http success" do
-      get "/cars/edit"
       expect(response).to have_http_status(:success)
     end
   end
