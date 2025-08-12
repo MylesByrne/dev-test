@@ -3,13 +3,16 @@ class Car < ApplicationRecord
   belongs_to :car_model
   belongs_to :year
 
+  validates :make, :car_model, :year, presence: true
+  validates :count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
+
   validate :associations_consistent
 
   private
-
   def associations_consistent
-    errors.add(:car_model, "must belong to selected make") if car_model && make && car_model.make_id != make_id
-    errors.add(:year, "must belong to selected model") if year && car_model && year.car_model_id != car_model_id
-    errors.add(:year, "must belong to selected make") if year && make && year.make_id != make_id
+    return unless make && car_model && year
+    errors.add(:car_model, "must belong to the selected make") if car_model.make_id != make_id
+    errors.add(:year, "must belong to the selected model")     if year.car_model_id != car_model_id
+    errors.add(:year, "must belong to the selected make")      if year.make_id != make_id
   end
 end

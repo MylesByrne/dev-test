@@ -1,4 +1,3 @@
-# app/controllers/years_controller.rb
 class YearsController < ApplicationController
   before_action :set_year, only: [:show, :edit, :update, :destroy]
 
@@ -40,6 +39,12 @@ class YearsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+  
+  def for_model
+  years = Year.where(make_id: params[:make_id], car_model_id: params[:car_model_id])
+              .select(:id, :year).order(year: :desc)
+  render json: years
   end
 
   def destroy

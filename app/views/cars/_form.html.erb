@@ -1,0 +1,48 @@
+<!-- app/views/cars/_form.html.erb -->
+<%= form_with(model: car, local: true) do |f| %>
+  <% if car.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(car.errors.count, "error") %> prohibited this car from being saved:</h2>
+      <ul>
+        <% car.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li> <!-- e.g., "Model can't be blank", "Year can't be blank" -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :make_id, "Make" %>
+    <%= f.collection_select :make_id, makes, :id, :name,
+          { prompt: "Select Make" },
+          { id: "car_make_select" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :car_model_id, "Model" %>
+    <%= f.collection_select :car_model_id, models, :id, :name,
+          { prompt: "Select Model" },
+          { id: "car_model_select" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :year_id, "Year" %>
+    <%= f.collection_select :year_id, years, :id, :year,
+          { prompt: "Select Year" },
+          { id: "car_year_select" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :trim, "Trim" %>
+    <%= f.text_field :trim %>
+  </div>
+
+  <div class="field">
+    <%= f.label :count, "Count" %>
+    <%= f.number_field :count, min: 0, step: 1 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

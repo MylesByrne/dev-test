@@ -1,0 +1,27 @@
+<!-- app/views/cars/index.html.erb -->
+<h1>Cars</h1>
+<p><%= link_to "New Car", new_car_path, class: "btn btn-primary" %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Year</th>
+      <th>Trim</th>
+      <th>Count</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cars.each do |c| %>
+      <tr>
+        <td><%= c.make.name %></td>
+        <td><%= c.car_model.name %></td>
+        <td><%= c.year.year %></td>
+        <td><%= c.trim %></td>
+        <td><%= c.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

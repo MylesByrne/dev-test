@@ -1,0 +1,60 @@
+<!-- app/views/cars/new.html.erb -->
+<h1>New Car</h1>
+<%= render "form", car: @car, makes: @makes, models: @models, years: @years %>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const makeSel  = document.getElementById('car_make_select');
+  const modelSel = document.getElementById('car_model_select');
+  const yearSel  = document.getElementById('car_year_select');
+  if (!makeSel || !modelSel || !yearSel) return;
+
+  function loadModels(makeId, preselectId=null) {
+    if (!makeId) { modelSel.innerHTML = '<option value="">Select Model</option>'; yearSel.innerHTML = '<option value="">Select Year</option>'; return; }
+    modelSel.innerHTML = '<option value="">Loading...</option>';
+    yearSel.innerHTML  = '<option value="">Select Year</option>';
+    fetch('/car_models/for_make/' + makeId, { headers: { 'Accept': 'application/json' } })
+      .then(r => r.json())
+      .then(models => {
+        modelSel.innerHTML = '<option value="">Select Model</option>';
+        models.forEach(m => {
+          const o = document.createElement('option');
+          o.value = m.id; o.text = m.name;
+          if (preselectId && String(preselectId) === String(m.id)) o.selected = true;
+          modelSel.appendChild(o);
+        });
+        // If we preselected a model (edit case), load years too
+        if (preselectId) loadYears(makeId, preselectId, document.getElementById('car_year_select').value || null);
+      });
+  }
+
+  function loadYears(makeId, modelId, preselectId=null) {
+    if (!makeId || !modelId) { yearSel.innerHTML = '<option value="">Select Year</option>'; return; }
+    yearSel.innerHTML = '<option value="">Loading...</option>';
+    fetch('/years/for_model/' + makeId + '/' + modelId, { headers: { 'Accept': 'application/json' } })
+      .then(r => r.json())
+      .then(years => {
+        yearSel.innerHTML = '<option value="">Select Year</option>';
+        years.forEach(y => {
+          const o = document.createElement('option');
+          o.value = y.id; o.text = y.year;
+          if (preselectId && String(preselectId) === String(y.id)) o.selected = true;
+          yearSel.appendChild(o);
+        });
+      });
+  }
+
+  // Bind change events
+  makeSel.addEventListener('change', e => loadModels(e.target.value));
+  modelSel.addEventListener('change', e => loadYears(makeSel.value, e.target.value));
+
+  // On page load (edit or re-render after validation error), repopulate
+  if (makeSel.value) {
+    const currentModelId = modelSel.value || null;
+    const currentYearId  = yearSel.value  || null;
+    loadModels(makeSel.value, currentModelId);
+    if (currentModelId) loadYears(makeSel.value, currentModelId, currentYearId);
+  }
+});
+</script>
+
+<p><%= link_to "Back", cars_path %></p>
