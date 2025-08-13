@@ -15,9 +15,6 @@ class CarsController < ApplicationController
   end
 
   def edit
-    @makes  = Make.order(:name)
-    @models = CarModel.where(make_id: @car.make_id).order(:name)
-    @years  = Year.where(make_id: @car.make_id, car_model_id: @car.car_model_id).order(year: :desc)
   end
 
   def create

@@ -12,7 +12,7 @@ function initCarForm() {
   if (makeSel.dataset.bound === 'true') return;
   makeSel.dataset.bound = 'true';
 
-  function loadModels(makeId, preselectId = null) {
+  function loadModels(makeId) {
     if (!makeId) {
       modelSel.innerHTML = '<option value="">Select Model</option>';
       yearSel.innerHTML  = '<option value="">Select Year</option>';
@@ -33,17 +33,10 @@ function initCarForm() {
           const o = document.createElement('option');
           o.value = m.id;
           o.text  = m.name;
-          if (preselectId && String(preselectId) === String(m.id)) o.selected = true;
           modelSel.appendChild(o);
         });
         modelSel.disabled = false;
 
-        // If we preselected a model (edit/validation re-render), load years too
-        if (preselectId) {
-          loadYears(makeId, preselectId, yearSel.value || null);
-        } else {
-          yearSel.disabled = false;
-        }
       })
       .catch(() => {
         modelSel.innerHTML = '<option value="">Select Model</option>';
@@ -52,7 +45,7 @@ function initCarForm() {
       });
   }
 
-  function loadYears(makeId, modelId, preselectId = null) {
+  function loadYears(makeId, modelId) {
     if (!makeId || !modelId) {
       yearSel.innerHTML = '<option value="">Select Year</option>';
       yearSel.disabled  = false;
@@ -69,7 +62,6 @@ function initCarForm() {
           const o = document.createElement('option');
           o.value = y.id;
           o.text  = y.year;
-          if (preselectId && String(preselectId) === String(y.id)) o.selected = true;
           yearSel.appendChild(o);
         });
         yearSel.disabled = false;
